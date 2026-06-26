@@ -336,6 +336,23 @@
     .bk-go{ grid-column:1 / -1; padding:16px; flex-direction:row; }
     .bk-go small{ margin-left:6px; }
   }
+  /* ---------- Reviews ---------- */
+  .rating-summary{ margin-top:18px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .stars{ position:relative; display:inline-block; font-family:Arial,sans-serif; font-size:26px; line-height:1; letter-spacing:2px; }
+  .stars .base{ color:#ddd2b8; }
+  .stars .fill{ color:var(--gold); position:absolute; left:0; top:0; overflow:hidden; white-space:nowrap; }
+  .rating-summary p{ color:var(--muted); font-size:14.5px; margin:0; }
+  .rating-summary p b{ color:var(--ink); font-family:var(--serif); font-size:22px; }
+  .reviews-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:10px; }
+  .review{ background:var(--cream); border:1px solid var(--line); border-radius:6px; padding:26px 26px 24px; display:flex; flex-direction:column; }
+  .review .qmark{ font-family:var(--serif); font-size:56px; line-height:.7; color:var(--gold); height:30px; }
+  .review .rstars{ color:var(--gold); font-size:15px; letter-spacing:3px; margin:4px 0 12px; }
+  .review .rtext{ color:var(--ink-soft); font-family:var(--serif); font-style:italic; font-size:17px; line-height:1.5; flex:1; }
+  .review .rwho{ margin-top:18px; padding-top:14px; border-top:1px solid var(--line); }
+  .review .rwho b{ font-weight:600; font-size:14px; color:var(--ink); }
+  .review .rwho span{ display:block; color:var(--muted); font-size:11px; letter-spacing:1.2px; text-transform:uppercase; margin-top:4px; }
+  @media (max-width:900px){ .reviews-grid{ grid-template-columns:1fr; gap:18px; } }
+
   @media (max-width:600px){
     .section{ padding:60px 0; }
     .sec-head{ margin-bottom:38px; }
@@ -379,6 +396,7 @@
       <a class="link" href="#amenities">Amenities</a>
       <a class="link" href="#gallery">Gallery</a>
       <a class="link" href="#location">Location</a>
+      <a class="link" href="#reviews">Reviews</a>
       <a class="link" href="#contact">Contact</a>
       <a class="nav-book" href="#booking">Book Now</a>
     </nav>
@@ -399,6 +417,7 @@
     <a class="d-link" href="#amenities">Amenities</a>
     <a class="d-link" href="#gallery">Gallery</a>
     <a class="d-link" href="#location">Location</a>
+    <a class="d-link" href="#reviews">Reviews</a>
     <a class="d-link" href="#contact">Contact</a>
     <a class="btn btn-gold" href="#booking">Book Now</a>
     <div class="d-contact">
@@ -535,6 +554,44 @@
     <div class="map reveal">
       <iframe title="Map to Hotel The Raghavas', Ayodhya" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
         src="https://maps.google.com/maps?q=26.794089,82.203562(Hotel+The+Raghavas')&z=16&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Guest Reviews -->
+<section class="section alt" id="reviews">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <p class="eyebrow">Guest Reviews</p>
+      <h2>Loved by our guests</h2>
+      <div class="rating-summary">
+        <span class="stars"><span class="base">★★★★★</span><span class="fill" style="width:88%">★★★★★</span></span>
+        <p><b>4.4 / 5</b> &nbsp;·&nbsp; 162 ratings on Justdial &nbsp;·&nbsp; also reviewed on TripAdvisor, Booking.com &amp; MakeMyTrip</p>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review reveal">
+        <div class="qmark">&ldquo;</div>
+        <div class="rstars">★★★★★</div>
+        <p class="rtext">Situated in the heart of the city — religious places &amp; market nearby. A nice place to stay. Neat &amp; clean rooms with an in-house pantry, and good, cooperative staff — especially Mr Rajiv Gupta.</p>
+        <div class="rwho"><b>Jaideep B.</b><span>Verified review · TripAdvisor</span></div>
+      </div>
+      <div class="review reveal">
+        <div class="qmark">&ldquo;</div>
+        <div class="rstars">★★★★★</div>
+        <p class="rtext">Excellent service from Raju Gupta and Deeksha Tiwari. Clean room, good service and polite behaviour, with tourist places close by.</p>
+        <div class="rwho"><b>Verified Guest</b><span>Verified review · TripAdvisor</span></div>
+      </div>
+      <div class="review reveal">
+        <div class="qmark">&ldquo;</div>
+        <div class="rstars">★★★★★</div>
+        <p class="rtext">Ram Mandir is just about 100 metres&rsquo; walking distance. If you&rsquo;re visiting, do stay here — the luxury room was neat and clean.</p>
+        <div class="rwho"><b>Verified Guest</b><span>Verified review · TripAdvisor</span></div>
+      </div>
+    </div>
+    <div class="center" style="margin-top:42px">
+      <a class="btn btn-gold" href="https://maps.app.goo.gl/QKUvRyvNqzwDBkyz9" target="_blank" rel="noopener">Read &amp; write reviews on Google</a>
+      <a class="btn" style="background:transparent;color:var(--gold-deep);border-color:var(--gold-deep);margin-left:10px" href="https://www.tripadvisor.com/Hotel_Review-g1985445-d33935240-Reviews-The_Raghavas-Ayodhya_Ayodhya_District_Uttar_Pradesh.html" target="_blank" rel="noopener">See TripAdvisor</a>
     </div>
   </div>
 </section>
