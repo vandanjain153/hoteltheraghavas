@@ -1,11 +1,12 @@
 /* Hotel The Raghavas' — offline service worker */
-const CACHE = 'raghavas-v1';
+const CACHE = 'raghavas-v2';
 
-/* Files cached up front so the app opens even with no connection. */
+/* Cached up front so the app opens even with no connection. */
 const PRECACHE = [
   './',
   './index.html',
   './manifest.webmanifest',
+  './images/facade.jpg',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/maskable-192.png',
@@ -17,9 +18,7 @@ const PRECACHE = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting())
   );
 });
 
@@ -36,24 +35,32 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  // Let external requests (e.g. wa.me WhatsApp links) go straight to the network.
+  // External requests (e.g. wa.me, Google Fonts/Maps) go straight to the network.
   if (url.origin !== self.location.origin) return;
 
-  // Cache-first: serve from cache, otherwise fetch and store for next time
-  // (this is how room photos get cached the first time they're viewed).
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((resp) => {
-        if (resp && resp.status === 200 && resp.type === 'basic') {
-          const copy = resp.clone();
-          caches.open(CACHE).then((cache) => cache.put(req, copy)).catch(() => {});
-        }
+  const isDoc = req.mode === 'navigate' ||
+                (req.headers.get('accept') || '').includes('text/html');
+
+  if (isDoc) {
+    // Network-first for the page, so content/design updates show up immediately online.
+    event.respondWith(
+      fetch(req).then((resp) => {
+        const copy = resp.clone();
+        caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => {});
         return resp;
-      }).catch(() => {
-        // Offline and not cached: fall back to the home page for navigations.
-        if (req.mode === 'navigate') return caches.match('./index.html');
-      });
-    })
+      }).catch(() => caches.match(req).then((c) => c || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Cache-first for images and other static assets.
+  event.respondWith(
+    caches.match(req).then((cached) => cached || fetch(req).then((resp) => {
+      if (resp && resp.status === 200 && resp.type === 'basic') {
+        const copy = resp.clone();
+        caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+      }
+      return resp;
+    }).catch(() => undefined))
   );
 });
